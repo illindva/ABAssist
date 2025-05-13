@@ -1,0 +1,102 @@
+/* Custom styles for ABAssist application */
+
+/* Body styling */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main content area */
+main.container {
+    flex: 1;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Footer styling */
+.footer {
+    margin-top: auto;
+    padding: 15px 0;
+}
+
+/* Card hover effect */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Active navigation indicator */
+.nav-link.active {
+    font-weight: bold;
+    position: relative;
+}
+
+.nav-link.active:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    right: 25%;
+    height: 2px;
+    background-color: var(--bs-primary);
+}
+
+/* Page navigation button group */
+.btn-group .btn {
+    transition: all 0.3s ease;
+}
+
+/* Icon styling */
+.fas, .far, .fab {
+    margin-right: 0.35rem;
+}
+
+/* Breadcrumb styling */
+.breadcrumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Alert styling */
+.alert {
+    border-left: 4px solid var(--bs-primary);
+}
+
+.alert-info {
+    border-left-color: var(--bs-info);
+}
+
+.alert-warning {
+    border-left-color: var(--bs-warning);
+}
+
+.alert-danger {
+    border-left-color: var(--bs-danger);
+}
+
+.alert-success {
+    border-left-color: var(--bs-success);
+}
+
+/* Card header styling */
+.card-header {
+    font-weight: 600;
+}
+
+/* Navbar brand */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Improve form control focus */
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}ABAssist - App3 Page 4{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('app3.index') }}">App3</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Page 4</li>
+            </ol>
+        </nav>
+        
+        <h2 class="card-title mb-4">
+            <i class="fas fa-cogs me-2"></i>App3 - Page 4
+        </h2>
+        
+        <div class="alert alert-info mb-4">
+            <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Page Information</h5>
+            <p>This is Page 4 of App3. Each page can be configured to connect to external systems like Oracle databases, Sybase databases, and Linux hosts via SSH.</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">Security</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Security Management</h5>
+                        <p class="card-text">Configure and monitor system security settings.</p>
+                        <a href="#" class="btn btn-outline-primary">Security Settings</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">Auditing</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Audit Logs</h5>
+                        <p class="card-text">View and analyze system audit logs.</p>
+                        <a href="#" class="btn btn-outline-primary">View Audit Logs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h4>Page Navigation</h4>
+            <div class="btn-group" role="group">
+                <a href="{{ url_for('app3.page1') }}" class="btn btn-outline-primary">Page 1</a>
+                <a href="{{ url_for('app3.page2') }}" class="btn btn-outline-primary">Page 2</a>
+                <a href="{{ url_for('app3.page3') }}" class="btn btn-outline-primary">Page 3</a>
+                <a href="{{ url_for('app3.page4') }}" class="btn btn-primary active">Page 4</a>
+                <a href="{{ url_for('app3.page5') }}" class="btn btn-outline-primary">Page 5</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

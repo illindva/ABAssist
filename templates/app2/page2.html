@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}ABAssist - App2 Page 2{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('app2.index') }}">App2</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Page 2</li>
+            </ol>
+        </nav>
+        
+        <h2 class="card-title mb-4">
+            <i class="fas fa-tasks me-2"></i>App2 - Page 2
+        </h2>
+        
+        <div class="alert alert-info mb-4">
+            <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Page Information</h5>
+            <p>This is Page 2 of App2. Each page can be configured to connect to external systems like Oracle databases, Sybase databases, and Linux hosts via SSH.</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">Data Dashboard</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Data Visualization</h5>
+                        <p class="card-text">View visualizations and metrics of system data.</p>
+                        <a href="#" class="btn btn-outline-primary">View Dashboard</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">Data Export</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Export Reports</h5>
+                        <p class="card-text">Generate and export data reports in various formats.</p>
+                        <a href="#" class="btn btn-outline-primary">Export Data</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h4>Page Navigation</h4>
+            <div class="btn-group" role="group">
+                <a href="{{ url_for('app2.page1') }}" class="btn btn-outline-primary">Page 1</a>
+                <a href="{{ url_for('app2.page2') }}" class="btn btn-primary active">Page 2</a>
+                <a href="{{ url_for('app2.page3') }}" class="btn btn-outline-primary">Page 3</a>
+                <a href="{{ url_for('app2.page4') }}" class="btn btn-outline-primary">Page 4</a>
+                <a href="{{ url_for('app2.page5') }}" class="btn btn-outline-primary">Page 5</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
