@@ -57,18 +57,30 @@ def generate_xml_form():
         # Parse tag names for each placeholder
         tag_names: Dict[str, str] = {}
         for placeholder in placeholders:
-            # Find tag that contains this placeholder - allowing whitespace in tags
-            pattern = r'<([^\s>]+)[^>]*>\s*' + re.escape(placeholder) + r'\s*</\s*\1\s*>'
-            tag_match = re.search(pattern, xml_template)
+            # Find tag that contains this placeholder using multiple patterns
+            
+            # Pattern 1: Direct tag with placeholder as its only content
+            pattern1 = r'<([^\s>]+)[^>]*>\s*' + re.escape(placeholder) + r'\s*</\s*\1\s*>'
+            
+            # Pattern 2: Tag with mixed content including the placeholder
+            pattern2 = r'<([^\s>]+)[^>]*>[^<]*' + re.escape(placeholder) + r'[^<]*</\s*\1\s*>'
+            
+            # Pattern 3: Deeper nested structure with attribute
+            pattern3 = r'<([^\s>]+)[^>]*name\s*=\s*["\'][^"\']*["\'][^>]*>[^<]*' + re.escape(placeholder) + r'[^<]*</\s*\1\s*>'
+            
+            tag_match = re.search(pattern1, xml_template)
             if tag_match:
                 tag_names[placeholder] = tag_match.group(1)
             else:
-                # Try a simpler pattern as fallback
-                simple_match = re.search(r'<([^>]+)>[^<]*' + re.escape(placeholder) + r'[^<]*</\1>', xml_template)
+                simple_match = re.search(pattern2, xml_template)
                 if simple_match:
                     tag_names[placeholder] = simple_match.group(1)
                 else:
-                    tag_names[placeholder] = placeholder
+                    attr_match = re.search(pattern3, xml_template)
+                    if attr_match:
+                        tag_names[placeholder] = attr_match.group(1)
+                    else:
+                        tag_names[placeholder] = placeholder
                 
             # Print for debugging
             print(f"Placeholder: {placeholder}, Tag name: {tag_names[placeholder]}")
