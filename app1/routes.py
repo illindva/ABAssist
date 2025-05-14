@@ -5,7 +5,7 @@ from models import PageOperation
 from app import db
 from forms import XMLTemplateForm, XMLInputsForm, PlaceholderValueForm
 import re
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, cast
 
 @app1_bp.route('/')
 @app1_bp.route('/index')
@@ -49,12 +49,15 @@ def generate_xml_form():
     if form.validate_on_submit():
         xml_template = form.template_content.data
         
+        if xml_template is None:
+            xml_template = ""  # Default to empty string if None
+            
         # Extract placeholders using regex pattern
         # Looking for INPUT1, INPUT2, etc.
         placeholders = re.findall(r'INPUT\d+', xml_template)
         
         # Parse tag names for each placeholder
-        tag_names = {}
+        tag_names: Dict[str, str] = {}
         for placeholder in placeholders:
             # Find tag that contains this placeholder
             tag_match = re.search(r'<([^>]+)>'+placeholder+'</([^>]+)>', xml_template)
@@ -108,13 +111,17 @@ def generate_final_xml():
         # Get the original template
         xml_template = form.template_content.data
         
+        if xml_template is None:
+            xml_template = ""  # Default to empty string if None
+            
         # Replace each placeholder with its value
         for entry in form.placeholder_values:
             placeholder = entry.placeholder_name.data
             value = entry.placeholder_value.data
             
-            # Replace the placeholder with the value
-            xml_template = xml_template.replace(placeholder, value)
+            if placeholder is not None and value is not None:
+                # Replace the placeholder with the value
+                xml_template = xml_template.replace(placeholder, value)
         
         # Render the template with the final XML
         return render_template('app1/xml_result.html', 
