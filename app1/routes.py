@@ -183,12 +183,11 @@ def page4():
 @login_required
 def page5():
     # Log the page operation
-    operation = PageOperation(
-        user_id=current_user.id,
-        app_name='app1',
-        page_name='page5',
-        operation='view'
-    )
+    operation = PageOperation()
+    operation.user_id = current_user.id
+    operation.app_name = 'app1'
+    operation.page_name = 'page5'
+    operation.operation = 'view'
     db.session.add(operation)
     db.session.commit()
     
