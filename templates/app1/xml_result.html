@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}ABAssist - {{ title }}{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('app1.index') }}">App1</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('app1.page1') }}">Page 1</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Generated XML</li>
+            </ol>
+        </nav>
+        
+        <h2 class="card-title mb-4">
+            <i class="fas fa-code me-2"></i>Generated XML
+        </h2>
+        
+        <div class="alert alert-success mb-4">
+            <h5 class="alert-heading"><i class="fas fa-check-circle me-2"></i>XML Successfully Generated</h5>
+            <p>Your XML has been generated with the provided values. You can copy the XML below or download it.</p>
+        </div>
+        
+        <div class="mb-4">
+            <div class="card bg-dark text-light">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Generated XML</span>
+                    <div>
+                        <button id="copyBtn" class="btn btn-sm btn-outline-light" onclick="copyXml()">
+                            <i class="fas fa-copy me-1"></i> Copy
+                        </button>
+                        <button id="downloadBtn" class="btn btn-sm btn-outline-light" onclick="downloadXml()">
+                            <i class="fas fa-download me-1"></i> Download
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <pre id="xmlContent" class="mb-0" style="white-space: pre-wrap; word-break: break-all;">{{ xml_content }}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <a href="{{ url_for('app1.page1') }}" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-1"></i> Back to Page 1
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function copyXml() {
+        const xmlText = document.getElementById('xmlContent').innerText;
+        navigator.clipboard.writeText(xmlText).then(function() {
+            const copyBtn = document.getElementById('copyBtn');
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check me-1"></i> Copied!';
+            setTimeout(function() {
+                copyBtn.innerHTML = originalText;
+            }, 2000);
+        });
+    }
+    
+    function downloadXml() {
+        const xmlText = document.getElementById('xmlContent').innerText;
+        const blob = new Blob([xmlText], { type: 'application/xml' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'generated_xml_' + new Date().getTime() + '.xml';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+</script>
+{% endblock %}

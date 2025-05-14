@@ -23,7 +23,7 @@
         </div>
         
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-header">External System Connections</div>
                     <div class="card-body">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-header">Check Status</div>
                     <div class="card-body">
@@ -42,6 +42,57 @@
                         <p class="card-text">Run automated checks against connected systems.</p>
                         <a href="#" class="btn btn-outline-primary">Run Check</a>
                     </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header">Generate Message for Posting</div>
+                    <div class="card-body">
+                        <h5 class="card-title">XML Generator</h5>
+                        <p class="card-text">Generate XML messages from templates with placeholders.</p>
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#xmlTemplateForm" aria-expanded="false" aria-controls="xmlTemplateForm">
+                            Generate XML
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- XML Template Form (Collapsed by default) -->
+        <div class="collapse mt-3" id="xmlTemplateForm">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">XML Template Generator</h5>
+                </div>
+                <div class="card-body">
+                    <p>Enter an XML template with placeholders (INPUT1, INPUT2, etc.) that will be replaced with your values.</p>
+                    <p><small class="text-muted">Example: <code>&lt;tradeDate&gt;INPUT1&lt;/tradeDate&gt;</code> - the placeholder INPUT1 will be replaced with your input.</small></p>
+                    
+                    <form method="POST" action="{{ url_for('app1.generate_xml_form') }}">
+                        {{ xml_form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ xml_form.template_content.label(class="form-label") }}
+                            {% if xml_form.template_content.errors %}
+                                {{ xml_form.template_content(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in xml_form.template_content.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ xml_form.template_content(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ xml_form.submit(class="btn btn-primary") }}
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#xmlTemplateForm">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
