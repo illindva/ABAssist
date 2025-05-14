@@ -17,12 +17,11 @@ def index():
 @login_required
 def page1():
     # Log the page operation
-    operation = PageOperation(
-        user_id=current_user.id,
-        app_name='app1',
-        page_name='page1',
-        operation='view'
-    )
+    operation = PageOperation()
+    operation.user_id = current_user.id
+    operation.app_name = 'app1'
+    operation.page_name = 'page1'
+    operation.operation = 'view'
     db.session.add(operation)
     db.session.commit()
     
@@ -35,12 +34,11 @@ def page1():
 @login_required
 def generate_xml_form():
     # Log the page operation
-    operation = PageOperation(
-        user_id=current_user.id,
-        app_name='app1',
-        page_name='generate_xml_form',
-        operation='generate_input_form'
-    )
+    operation = PageOperation()
+    operation.user_id = current_user.id
+    operation.app_name = 'app1'
+    operation.page_name = 'generate_xml_form'
+    operation.operation = 'generate_input_form'
     db.session.add(operation)
     db.session.commit()
     
