@@ -59,21 +59,23 @@
                     <tbody>
                         {% for entry in form.placeholder_values %}
                             <tr>
-                                <td><code>{{ entry.placeholder_name.data }}</code></td>
+                                <td><code>{{ entry.placeholder_name.data|string }}</code></td>
                                 <td>
-                                    {% if entry.placeholder_name.data in tag_names %}
-                                        <code>&lt;{{ tag_names[entry.placeholder_name.data] }}&gt;</code>
+                                    {% set placeholder_data = entry.placeholder_name.data|string %}
+                                    {% if placeholder_data in tag_names %}
+                                        <code>&lt;{{ tag_names[placeholder_data] }}&gt;</code>
                                     {% else %}
                                         <span class="text-muted">Unknown</span>
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {{ entry.placeholder_name }}
+                                    {# Hidden field, no need to display #}
                                     <div class="mb-3">
-                                        {% if entry.placeholder_name.data in tag_names %}
-                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + tag_names[entry.placeholder_name.data]) }}
+                                        {% set placeholder_data = entry.placeholder_name.data|string %}
+                                        {% if placeholder_data in tag_names %}
+                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " ~ tag_names[placeholder_data]) }}
                                         {% else %}
-                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + entry.placeholder_name.data) }}
+                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for placeholder") }}
                                         {% endif %}
                                     </div>
                                 </td>
