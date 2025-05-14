@@ -39,12 +39,19 @@
                     <tbody>
                         {% for entry in form.placeholder_values %}
                             <tr>
-                                <td>{{ entry.placeholder_name.data }}</td>
-                                <td>{{ tag_names.get(entry.placeholder_name.data, entry.placeholder_name.data) }}</td>
+                                <td><code>{{ entry.placeholder_name.data }}</code></td>
+                                <td>
+                                    {% set tag = tag_names.get(entry.placeholder_name.data, entry.placeholder_name.data) %}
+                                    {% if tag and tag != entry.placeholder_name.data %}
+                                        <code>&lt;{{ tag }}&gt;</code>
+                                    {% else %}
+                                        <span class="text-muted">Unknown</span>
+                                    {% endif %}
+                                </td>
                                 <td>
                                     {{ entry.placeholder_name }}
                                     <div class="mb-3">
-                                        {{ entry.placeholder_value(class="form-control", placeholder="Enter value") }}
+                                        {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + tag_names.get(entry.placeholder_name.data, entry.placeholder_name.data)) }}
                                     </div>
                                 </td>
                             </tr>

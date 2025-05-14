@@ -59,12 +59,21 @@ def generate_xml_form():
         # Parse tag names for each placeholder
         tag_names: Dict[str, str] = {}
         for placeholder in placeholders:
-            # Find tag that contains this placeholder
-            tag_match = re.search(r'<([^>]+)>'+placeholder+'</([^>]+)>', xml_template)
-            if tag_match and tag_match.group(1) == tag_match.group(2):
+            # Find tag that contains this placeholder - allowing whitespace in tags
+            pattern = r'<([^\s>]+)[^>]*>\s*' + re.escape(placeholder) + r'\s*</\s*\1\s*>'
+            tag_match = re.search(pattern, xml_template)
+            if tag_match:
                 tag_names[placeholder] = tag_match.group(1)
             else:
-                tag_names[placeholder] = placeholder
+                # Try a simpler pattern as fallback
+                simple_match = re.search(r'<([^>]+)>[^<]*' + re.escape(placeholder) + r'[^<]*</\1>', xml_template)
+                if simple_match:
+                    tag_names[placeholder] = simple_match.group(1)
+                else:
+                    tag_names[placeholder] = placeholder
+                
+            # Print for debugging
+            print(f"Placeholder: {placeholder}, Tag name: {tag_names[placeholder]}")
         
         # Create a form with fields for each placeholder
         inputs_form = XMLInputsForm()

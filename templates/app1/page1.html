@@ -68,6 +68,7 @@
                 <div class="card-body">
                     <p>Enter an XML template with placeholders (INPUT1, INPUT2, etc.) that will be replaced with your values.</p>
                     <p><small class="text-muted">Example: <code>&lt;tradeDate&gt;INPUT1&lt;/tradeDate&gt;</code> - the placeholder INPUT1 will be replaced with your input.</small></p>
+                    <button type="button" class="btn btn-sm btn-outline-secondary mb-3" id="loadSampleBtn">Load Sample Template</button>
                     
                     <form method="POST" action="{{ url_for('app1.generate_xml_form') }}">
                         {{ xml_form.hidden_tag() }}
@@ -109,4 +110,46 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load sample XML template
+        const loadSampleBtn = document.getElementById('loadSampleBtn');
+        if (loadSampleBtn) {
+            loadSampleBtn.addEventListener('click', function() {
+                const templateField = document.querySelector('textarea[name="template_content"]');
+                if (templateField) {
+                    const sampleTemplate = `<?xml version="1.0" encoding="UTF-8"?>
+<trade>
+    <header>
+        <messageId>ABC-123</messageId>
+        <timestamp>2025-05-14T12:00:00Z</timestamp>
+    </header>
+    <tradeDetails>
+        <tradeId>INPUT1</tradeId>
+        <tradeDate>INPUT2</tradeDate>
+        <settlementDate>INPUT3</settlementDate>
+        <instrument>
+            <type>INPUT4</type>
+            <isin>INPUT5</isin>
+            <currency>INPUT6</currency>
+        </instrument>
+        <quantity>INPUT7</quantity>
+        <price>INPUT8</price>
+        <counterparty>INPUT9</counterparty>
+    </tradeDetails>
+    <additionalData>
+        <field name="trader">INPUT10</field>
+        <field name="notes">INPUT11</field>
+    </additionalData>
+</trade>`;
+                    
+                    templateField.value = sampleTemplate;
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}
