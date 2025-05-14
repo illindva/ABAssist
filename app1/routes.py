@@ -103,12 +103,11 @@ def generate_xml_form():
 @login_required
 def generate_final_xml():
     # Log the page operation
-    operation = PageOperation(
-        user_id=current_user.id,
-        app_name='app1',
-        page_name='generate_final_xml',
-        operation='generate_final_xml'
-    )
+    operation = PageOperation()
+    operation.user_id = current_user.id
+    operation.app_name = 'app1'
+    operation.page_name = 'generate_final_xml'
+    operation.operation = 'generate_final_xml'
     db.session.add(operation)
     db.session.commit()
     
@@ -142,12 +141,11 @@ def generate_final_xml():
 @login_required
 def page2():
     # Log the page operation
-    operation = PageOperation(
-        user_id=current_user.id,
-        app_name='app1',
-        page_name='page2',
-        operation='view'
-    )
+    operation = PageOperation()
+    operation.user_id = current_user.id
+    operation.app_name = 'app1'
+    operation.page_name = 'page2'
+    operation.operation = 'view'
     db.session.add(operation)
     db.session.commit()
     
@@ -157,12 +155,11 @@ def page2():
 @login_required
 def page3():
     # Log the page operation
-    operation = PageOperation(
-        user_id=current_user.id,
-        app_name='app1',
-        page_name='page3',
-        operation='view'
-    )
+    operation = PageOperation()
+    operation.user_id = current_user.id
+    operation.app_name = 'app1'
+    operation.page_name = 'page3'
+    operation.operation = 'view'
     db.session.add(operation)
     db.session.commit()
     
@@ -172,12 +169,11 @@ def page3():
 @login_required
 def page4():
     # Log the page operation
-    operation = PageOperation(
-        user_id=current_user.id,
-        app_name='app1',
-        page_name='page4',
-        operation='view'
-    )
+    operation = PageOperation()
+    operation.user_id = current_user.id
+    operation.app_name = 'app1'
+    operation.page_name = 'page4'
+    operation.operation = 'view'
     db.session.add(operation)
     db.session.commit()
     
