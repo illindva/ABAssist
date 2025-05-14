@@ -40,42 +40,23 @@
             {{ form.hidden_tag() }}
             {{ form.template_content }}
             
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Placeholder</th>
-                            <th scope="col">XML Element Name</th>
-                            <th scope="col">Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for entry in form.placeholder_values %}
-                            <tr>
-                                <td><code>{{ entry.placeholder_name.data|string }}</code></td>
-                                <td>
-                                    {% set placeholder_data = entry.placeholder_name.data|string %}
-                                    {% if placeholder_data in tag_names %}
-                                        <code>&lt;{{ tag_names[placeholder_data] }}&gt;</code>
-                                    {% else %}
-                                        <span class="text-muted">Unknown</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {# Hidden field, no need to display #}
-                                    <div class="mb-3">
-                                        {% set placeholder_data = entry.placeholder_name.data|string %}
-                                        {% if placeholder_data in tag_names %}
-                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " ~ tag_names[placeholder_data]) }}
-                                        {% else %}
-                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for placeholder") }}
-                                        {% endif %}
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="row">
+                {% for entry in form.placeholder_values %}
+                    <div class="col-md-6 mb-3">
+                        {# Hidden field, no need to display #}
+                        {{ entry.placeholder_name }}
+                        <div class="form-group">
+                            {% set placeholder_data = entry.placeholder_name.data|string %}
+                            {% if placeholder_data in tag_names %}
+                                <label for="value-{{ loop.index }}"><code>&lt;{{ tag_names[placeholder_data] }}&gt;</code></label>
+                                {{ entry.placeholder_value(class="form-control", id="value-" ~ loop.index, placeholder="Enter value for " ~ tag_names[placeholder_data]) }}
+                            {% else %}
+                                <label for="value-{{ loop.index }}"><code>{{ placeholder_data }}</code></label>
+                                {{ entry.placeholder_value(class="form-control", id="value-" ~ loop.index, placeholder="Enter value for placeholder") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
             
             <div class="mb-3">
