@@ -48,10 +48,14 @@
                         <div class="form-group">
                             {% set placeholder_data = entry.placeholder_name.data|string %}
                             {% if placeholder_data in tag_names %}
-                                <label for="value-{{ loop.index }}"><code>&lt;{{ tag_names[placeholder_data] }}&gt;</code></label>
+                                <label for="value-{{ loop.index }}">
+                                    <strong>{{ placeholder_data }}</strong> - <code>&lt;{{ tag_names[placeholder_data] }}&gt;</code>
+                                </label>
                                 {{ entry.placeholder_value(class="form-control", id="value-" ~ loop.index, placeholder="Enter value for " ~ tag_names[placeholder_data]) }}
                             {% else %}
-                                <label for="value-{{ loop.index }}"><code>{{ placeholder_data }}</code></label>
+                                <label for="value-{{ loop.index }}">
+                                    <strong>{{ placeholder_data }}</strong>
+                                </label>
                                 {{ entry.placeholder_value(class="form-control", id="value-" ~ loop.index, placeholder="Enter value for placeholder") }}
                             {% endif %}
                         </div>
