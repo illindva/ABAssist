@@ -23,6 +23,26 @@
             <p>Enter values for each placeholder in your XML template. These values will replace the placeholders in the final generated XML.</p>
         </div>
         
+        <!-- Debug information -->
+        <div class="card mb-3">
+            <div class="card-header bg-light">Debug Info</div>
+            <div class="card-body">
+                <h5>Tag Names Dictionary:</h5>
+                <ul>
+                {% for key, value in tag_names.items() %}
+                    <li><strong>{{ key }}</strong>: {{ value }}</li>
+                {% endfor %}
+                </ul>
+                
+                <h5>Placeholders List:</h5>
+                <ul>
+                {% for placeholder in placeholders %}
+                    <li>{{ placeholder }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
         <form method="POST" action="{{ url_for('app1.generate_final_xml') }}">
             {{ form.hidden_tag() }}
             {{ form.template_content }}
@@ -41,9 +61,8 @@
                             <tr>
                                 <td><code>{{ entry.placeholder_name.data }}</code></td>
                                 <td>
-                                    {% set tag = tag_names.get(entry.placeholder_name.data) %}
-                                    {% if tag %}
-                                        <code>&lt;{{ tag }}&gt;</code>
+                                    {% if entry.placeholder_name.data in tag_names %}
+                                        <code>&lt;{{ tag_names[entry.placeholder_name.data] }}&gt;</code>
                                     {% else %}
                                         <span class="text-muted">Unknown</span>
                                     {% endif %}
@@ -51,11 +70,10 @@
                                 <td>
                                     {{ entry.placeholder_name }}
                                     <div class="mb-3">
-                                        {% set tag = tag_names.get(entry.placeholder_name.data) %}
-                                        {% if tag %}
-                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + tag|string) }}
+                                        {% if entry.placeholder_name.data in tag_names %}
+                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + tag_names[entry.placeholder_name.data]) }}
                                         {% else %}
-                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + entry.placeholder_name.data|string) }}
+                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + entry.placeholder_name.data) }}
                                         {% endif %}
                                     </div>
                                 </td>
