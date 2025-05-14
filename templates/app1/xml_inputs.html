@@ -51,7 +51,12 @@
                                 <td>
                                     {{ entry.placeholder_name }}
                                     <div class="mb-3">
-                                        {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + tag_names.get(entry.placeholder_name.data, entry.placeholder_name.data)) }}
+                                        {% set tag = tag_names.get(entry.placeholder_name.data, entry.placeholder_name.data) %}
+                                        {% if tag is string %}
+                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value for " + tag) }}
+                                        {% else %}
+                                            {{ entry.placeholder_value(class="form-control", placeholder="Enter value") }}
+                                        {% endif %}
                                     </div>
                                 </td>
                             </tr>
