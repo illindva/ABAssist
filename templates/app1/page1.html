@@ -68,7 +68,21 @@
                 <div class="card-body">
                     <p>Enter an XML template with placeholders (INPUT1, INPUT2, etc.) that will be replaced with your values.</p>
                     <p><small class="text-muted">Example: <code>&lt;tradeDate&gt;INPUT1&lt;/tradeDate&gt;</code> - the placeholder INPUT1 will be replaced with your input.</small></p>
-                    <button type="button" class="btn btn-sm btn-outline-secondary mb-3" id="loadSampleBtn">Load Sample Template</button>
+                    
+                    <div class="mb-3">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="loadSampleBtn">Load Sample Template</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" id="loadTradeSample">Trade Sample</a></li>
+                                <li><a class="dropdown-item" href="#" id="loadFXSample">FX Transaction Sample</a></li>
+                                <li><a class="dropdown-item" href="#" id="loadCustomerSample">Customer Record Sample</a></li>
+                                <li><a class="dropdown-item" href="#" id="loadConfigSample">Configuration Sample</a></li>
+                            </ul>
+                        </div>
+                    </div>
                     
                     <form method="POST" action="{{ url_for('app1.generate_xml_form') }}">
                         {{ xml_form.hidden_tag() }}
@@ -115,13 +129,10 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Load sample XML template
-        const loadSampleBtn = document.getElementById('loadSampleBtn');
-        if (loadSampleBtn) {
-            loadSampleBtn.addEventListener('click', function() {
-                const templateField = document.querySelector('textarea[name="template_content"]');
-                if (templateField) {
-                    const sampleTemplate = `<?xml version="1.0" encoding="UTF-8"?>
+        const templateField = document.querySelector('textarea[name="template_content"]');
+        
+        // Trade Sample XML template
+        const tradeSampleTemplate = `<?xml version="1.0" encoding="UTF-8"?>
 <trade>
     <header>
         <messageId>ABC-123</messageId>
@@ -145,9 +156,129 @@
         <field name="notes">INPUT11</field>
     </additionalData>
 </trade>`;
-                    
-                    templateField.value = sampleTemplate;
-                }
+
+        // FX Transaction Sample XML template
+        const fxSampleTemplate = `<?xml version="1.0" encoding="UTF-8"?>
+<fxTransaction>
+    <transactionHeader>
+        <messageId>FX-456</messageId>
+        <timestamp>2025-05-14T14:30:00Z</timestamp>
+        <source>INPUT1</source>
+    </transactionHeader>
+    <dealDetails>
+        <dealId>INPUT2</dealId>
+        <dealDate>INPUT3</dealDate>
+        <valueDate>INPUT4</valueDate>
+        <baseCurrency>INPUT5</baseCurrency>
+        <quoteCurrency>INPUT6</quoteCurrency>
+        <direction>INPUT7</direction>
+        <baseAmount>INPUT8</baseAmount>
+        <quoteAmount>INPUT9</quoteAmount>
+        <rate>INPUT10</rate>
+    </dealDetails>
+    <counterparty>
+        <name>INPUT11</name>
+        <code>INPUT12</code>
+        <contact>INPUT13</contact>
+    </counterparty>
+    <status>INPUT14</status>
+</fxTransaction>`;
+
+        // Customer Record Sample XML template
+        const customerSampleTemplate = `<?xml version="1.0" encoding="UTF-8"?>
+<customerRecord>
+    <customerInfo>
+        <customerId>INPUT1</customerId>
+        <customerType>INPUT2</customerType>
+        <registrationDate>INPUT3</registrationDate>
+    </customerInfo>
+    <personalDetails>
+        <firstName>INPUT4</firstName>
+        <lastName>INPUT5</lastName>
+        <dateOfBirth>INPUT6</dateOfBirth>
+        <nationality>INPUT7</nationality>
+        <gender>INPUT8</gender>
+    </personalDetails>
+    <contactInfo>
+        <email>INPUT9</email>
+        <phone>INPUT10</phone>
+        <address>
+            <street>INPUT11</street>
+            <city>INPUT12</city>
+            <state>INPUT13</state>
+            <zipCode>INPUT14</zipCode>
+            <country>INPUT15</country>
+        </address>
+    </contactInfo>
+    <accountStatus>INPUT16</accountStatus>
+</customerRecord>`;
+
+        // Configuration Sample XML template
+        const configSampleTemplate = `<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <systemSettings>
+        <environment>INPUT1</environment>
+        <version>INPUT2</version>
+        <logLevel>INPUT3</logLevel>
+        <maxConnections>INPUT4</maxConnections>
+        <timeout>INPUT5</timeout>
+    </systemSettings>
+    <databaseConfig>
+        <host>INPUT6</host>
+        <port>INPUT7</port>
+        <username>INPUT8</username>
+        <schema>INPUT9</schema>
+        <poolSize>INPUT10</poolSize>
+    </databaseConfig>
+    <features>
+        <feature name="audit">
+            <enabled>INPUT11</enabled>
+            <retentionDays>INPUT12</retentionDays>
+        </feature>
+        <feature name="notifications">
+            <enabled>INPUT13</enabled>
+            <providers>INPUT14</providers>
+        </feature>
+    </features>
+</configuration>`;
+
+        // Load default sample template button
+        const loadSampleBtn = document.getElementById('loadSampleBtn');
+        if (loadSampleBtn && templateField) {
+            loadSampleBtn.addEventListener('click', function() {
+                templateField.value = tradeSampleTemplate;
+            });
+        }
+        
+        // Load Trade Sample button
+        const loadTradeSample = document.getElementById('loadTradeSample');
+        if (loadTradeSample && templateField) {
+            loadTradeSample.addEventListener('click', function() {
+                templateField.value = tradeSampleTemplate;
+            });
+        }
+        
+        // Load FX Transaction Sample button
+        const loadFXSample = document.getElementById('loadFXSample');
+        if (loadFXSample && templateField) {
+            loadFXSample.addEventListener('click', function() {
+                templateField.value = fxSampleTemplate;
+            });
+        }
+        
+        // Load Customer Record Sample button
+        const loadCustomerSample = document.getElementById('loadCustomerSample');
+        if (loadCustomerSample && templateField) {
+            loadCustomerSample.addEventListener('click', function() {
+                templateField.value = customerSampleTemplate;
+            });
+        }
+        
+        // Load Configuration Sample button
+        const loadConfigSample = document.getElementById('loadConfigSample');
+        if (loadConfigSample && templateField) {
+            loadConfigSample.addEventListener('click', function() {
+                templateField.value = configSampleTemplate;
             });
         }
     });
